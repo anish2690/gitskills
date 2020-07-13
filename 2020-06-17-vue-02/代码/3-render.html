@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        
+        // html => 创建vNode的方法 => vNode（更新的时候会使用这个简化的虚拟dom对象来完成比较工作，把需要改变的内容在进行渲染） => DOM
+
+        let app = new Vue({
+            el: '#app',
+
+            data: {
+                title: '开课吧'
+            },
+
+            // 没有了 template 来生成 vNode了，那么使用 render 函数也可以生成 vNode，然后返回
+
+
+            
+            render(createElement) {
+                
+                let vNode = createElement(
+                    'div',
+                    {
+                        attrs: {
+                            id: 'app'
+                        }
+                    },
+                    [
+                        createElement('h1', '开课吧')
+                    ]
+                );
+                console.log('vNode', vNode);
+
+                return vNode;
+            }
+        });
+
+        
+    </script>
+</body>
+</html>

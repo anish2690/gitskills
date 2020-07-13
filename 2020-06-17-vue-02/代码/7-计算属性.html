@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <h1>{{a}}</h1>
+        <h1>{{b}}</h1>
+        <h1>{{getB()}}</h1>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        let app = new Vue({
+            el: '#app',
+
+            data: {
+                a: 1,
+                v: 100
+            },
+
+            computed: {
+                // b: {
+                //     get() {
+                //         return this.a * 100;
+                //     }
+                // },
+
+                b() {
+                    return this.a * 100;
+                }
+            },
+
+            methods: {
+                getB() {
+                    return this.a * 100;
+                }
+            }
+        });
+
+        
+    </script>
+</body>
+</html>

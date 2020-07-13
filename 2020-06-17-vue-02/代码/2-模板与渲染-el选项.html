@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <div>欢迎来到{{title}}！</div>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        // https://cn.vuejs.org/v2/api/#el
+
+
+        // html => AST => 生成createElement方法 => 创建vNode的方法 => vNode（更新的时候会使用这个简化的虚拟dom对象来完成比较工作，把需要改变的内容在进行渲染） => DOM
+
+        let app = new Vue({
+            // 与 $mount 的作用是一致的
+            el: '#app',
+            // template: `
+            //     <div id="app">
+            //         <div>欢迎来到{{title}}！</div>
+            //     </div>
+            // `,
+
+            data: {
+                title: '开课吧'
+            }
+        });
+
+        // Vue(); // Vue 内部的this 指向window或者undefined（strict）
+        
+
+        // app.$mount('#app');
+
+        
+
+        // ast
+        let render = function() {
+            return _c(
+                'div',
+                {
+                    attrs:{"id":"app"}
+                },
+                [
+                    _c(
+                        'div',
+                        [
+                            _v("欢迎来到"+_s(title)+"！")
+                        ]
+                    )
+                ]
+            )
+        }
+        // with(this){return _c('div',{attrs:{"id":"app"}},[_c('div',[_v("欢迎来到"+_s(title)+"！")])])}
+
+    </script>
+</body>
+</html>

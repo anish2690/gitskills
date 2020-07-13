@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        // 每一个独立的组件模板有且仅有一个顶层父级元素。
+
+        // 错误！
+        // let app = new Vue({
+        //     template: `
+        //         <div>欢迎来到开课吧！</div>
+        //         <div>欢迎来到开课吧！</div>
+        //     `
+        // });
+
+        
+
+        // 正确
+        // let app = new Vue({
+        //     template: `
+        //         <div v-if="true">欢迎来到开课吧！</div>
+        //         <div v-else>欢迎来到开课吧！</div>
+        //     `
+        // });
+
+        
+
+        // 正确
+        // let app = new Vue({
+        //     template: `
+        //         <div>
+        //             <div>欢迎来到开课吧！</div>
+        //             <div>欢迎来到开课吧！</div>
+        //         </div>
+        //     `
+        // });
+
+
+
+        
+        let app = new Vue({
+            template: `
+                <div>
+                    <div>欢迎来到开课吧！</div>
+                    <div>欢迎来到开课吧！</div>
+                </div>
+            `
+        });
+
+        // 组件的挂载点不能是body或者html元素
+
+        // 错误
+        // app.$mount('html');
+        // app.$mount('body');
+
+
+        
+
+        app.$mount('#app');
+
+    </script>
+</body>
+</html>

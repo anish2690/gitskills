@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <h1>{{title}}</h1>
+        <my-component></my-component>
+        <my-component></my-component>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        Vue.component('my-component', {
+            template: `<div>{{name}}</div>`,
+            data: {
+                name: '紫薯'
+            },
+            // data() {
+            //     return {
+            //         name: '紫薯'
+            //     }
+            // }
+        });
+        
+        // data
+
+        let _data = function() {
+            return {
+                title: '开课吧'
+            }
+        }
+
+        let app = new Vue({
+            el: '#app',
+
+            _data
+        });
+
+        let app2 = new Vue({
+            el: '#app2',
+
+            _data
+        });
+
+        
+    </script>
+</body>
+</html>
