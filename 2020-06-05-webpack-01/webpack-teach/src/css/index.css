@@ -1,0 +1,5 @@
+body {
+    background-color: pink;
+    background: url("../images/logo.png") no-repeat;
+    /* @import url("../images/logo.png"); */
+}
