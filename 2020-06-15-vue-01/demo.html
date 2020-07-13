@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{title}}
+        <!-- 通过.sync修饰符可以很好的弥补v-model的缺点 -->
+        <my-component :size.sync="size" :title.sync="title" :myId="myId" :getdata="getdata"></my-component>
+        <!-- <my-component v-model="size" :title.sync="title" :myId="myId" :getdata="getdata"></my-component> -->
+    </div>
+    <script src="./代码/js/vue.js"></script>
+    <script>
+        // 函数被new调用后返回的实例化对象，可以通过instanceof判断是否是通过new方式返回的
+        // function Vue() {
+        //     this.a = "张三",
+        //         this.age = 10
+        // }
+        // const app = Vue();
+        // if (app instanceof Vue) {
+        //     console.log("app is Vue Object")
+        // } else {
+        //     console.log("app no Vue Object")
+        // }
+        const myComponent = Vue.component("my-component", {
+            props: ['size', 'title', "myId", "getdata"],
+            //model： 只能设置单个属性的双向数据绑定，无法针对多个属性进行双向数据绑定，并且由于具有隐式转换的特性，不宜与察觉里面的实现原理
+            // prop: 默认是value； event: 默认是input
+            // model: {
+            //     prop: "size",
+            //     event: "change"
+            // },
+            data() {
+                return {
+                    id: 123
+                }
+            },
+            template: `<div>
+                <p>{{size}}</p>
+                <span>{{title}}</span>
+                <button @click="handBtn">点击发送</button>
+                </div>`,
+            methods: {
+                handBtn() {
+                    // .sync的写法，在事件名：props值
+                    this.$emit('update:size', this.id)
+                    this.$emit('update:title', "欢迎来到英雄联盟")
+                    // v-model写法 事件名必须一致
+                    // this.$emit('change', this.id)
+                }
+            },
+            mounted() {
+                this.getdata();
+            },
+        })
+        const app = new Vue({
+            el: "#app",
+            data: {
+                title: "开课吧",
+                size: 1,
+                myMessage: "kkb",
+                myId: "110"
+            },
+            methods: {
+                getdata() {
+                    console.log("父组件传递过来的方法")
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

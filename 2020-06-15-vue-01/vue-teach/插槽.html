@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <base-layout>
+        <!-- 由于该节点是卸载子组件标签闭关的区间，由于子组件渲染的特性会将该区间的内容进行替换渲染
+            因此Vue会首先将该节点存储在内部的$slot的对象中，然后将通过内置的<slot></slot>渲染出该节点
+            并且当前的作用域是属于父组件的作用域，子组件标签包裹的区间也是父组件的作用域,
+            所以可以访问当前作用域实例下的数据
+        -->
+            <template v-slot:left="childrenVal">
+                {{childrenVal.login}}
+                <p>{{title}}</p>
+            </template>
+            
+            <template v-slot:rig>
+                <p>{{name}}</p>
+            </template>
+            <template v-slot:id="{id}">
+                {{id}}
+            </template>
+            <template v-slot:num="{lg}">{{lg}}</template>
+            <h2>默认的数据</h2>
+        </base-layout>
+
+    </div>
+    <script src="../代码/js/vue.js"></script>
+    <script>
+        Vue.component("base-layout", {
+            template: `
+                <div>
+                    <slot name="left" :childrenVal="childrenVal" :login="num"></slot>
+                    <slot name="rig"></slot>
+                    <slot name="num" :lg="lg"></slot>
+                    <slot></slot>
+                    <slot name="id" :id="id"></slot >
+                    
+                </div>
+            `,
+            data() {
+                return {
+                    childrenVal: "我是子组件的数据",
+                    id: "子组件的id",
+                    lg: "破茧成蝶",
+                    num: 1000
+                }
+            },
+            mounted() {
+                console.log(this.$slots)
+            },
+        })
+
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                id: 123,
+                title: "这里是父组件的作用域",
+                name: "我是父组件的数据"
+            },
+            mounted() {
+            },
+        })
+    </script>
+</body>
+
+</html>

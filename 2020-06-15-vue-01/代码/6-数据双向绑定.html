@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /**
+         * 当数据发生改变了，模板就会重新渲染，模板语法，v-bind等，是不会在视图发生变化对时候，去更新数据的。 ---- 单向数据流
+         * v-model：数据变化 -> 视图渲染 / 视图变化 -> 数据变化 ---- 双向数据流
+         * v-model是有使用限制的：
+         *  - input
+         *  - select
+         *  - textarea
+         *  - component，自己去定义绑定的组件属性
+         * 默认是绑定到了 value 属性上，且 v-model 同时只能绑定一个属性，更新的时候，不同的元素也是不同事件去触发
+         */
+        
+        let app = new Vue({
+            template: `
+                <div>
+                    <h1>{{v1}}</h1>
+                    <h1 :id="'kkb' + v1">开课吧</h1>
+                    <hr />
+                    <input v-model.lazy.number="v2" /> {{v2}}
+                </div>
+            `,
+            data: {
+                v1: 1,
+                v2: 1
+            }
+        });
+
+        app.$mount('#app');
+
+        console.log(app);
+
+    </script>
+</body>
+</html>

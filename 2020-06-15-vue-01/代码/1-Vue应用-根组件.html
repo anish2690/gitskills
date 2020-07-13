@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /**
+         * Vue 提供了一套构建组件的API
+         *  - 根组件
+         *  - 可复用组件
+         * 
+         * Vue 库 提供了一个名称为 Vue 的构造函数
+         * 
+         * 组件核心之一：
+         *   组件
+         *   模板
+         */
+
+        
+
+        // Vue 的实例 - 根组件对象 -> html
+        let app = new Vue({
+            // 组件在构建的时候，我们可以传入一些配置数据，用来构建组件的基本结构和功能
+            // Options API
+
+            // 定义当前这个组件的模板
+            // 构建了一个拥有界面的组件
+            template: `
+                <div>欢迎来到开课吧！</div>
+            `
+        });
+
+        // 组件 -> 通过 （template） -> DOM -> 挂载到页面中指定的位置
+        // 组件生成的结构（DOM）会替换挂载点元素，所以，挂载点不能是 html、body 这两个元素。
+        app.$mount('#app');
+
+        console.log(app);
+
+    </script>
+</body>
+</html>

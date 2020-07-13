@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /**
+         * 我们想要在模板中注入（使用）数据，那么必然有模板语法
+         *      插值表达式的模板语法
+         *          {{表达式}}
+         *              表达式：变量、函数、函数调用、算术运算
+         *          在Vue的模板中，自动绑定了上下文对象到当前组件实例对象（可以省略掉组件上下文对象 - this）
+         */
+
+        
+        let app = new Vue({
+            template: `
+                <div>{{title}}</div>
+            `,
+            data: {
+                title: '欢迎来到开课吧'
+            }
+        });
+
+        app.$mount('#app');
+
+        console.log(app);
+
+    </script>
+</body>
+</html>

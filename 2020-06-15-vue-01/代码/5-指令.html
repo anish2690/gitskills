@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /**
+         * 指令
+         *  一个带有 v- 前缀的特殊属性，Vue 会对它进行解析，影响当前DOM
+         */
+        
+        let app = new Vue({
+            template: `
+                <div>
+                    <h1 v-show="isShow">{{title}}</h1>
+                    <h1 v-if="isShow">{{title}}</h1>
+                    <hr />
+                    <ul>
+                        <li v-for="(user, index) of users">
+                            {{index}} - {{user.id}} - {{user.name}}
+                        </li>
+                    </ul>
+                    <ul>
+                        <li v-for="n of 10">{{n}}</li>
+                    </ul>
+                    <hr />
+                    <div v-bind:id="myId"></div>
+                    <div :id="myId"></div>
+
+                    <div :style="s1"></div>
+
+
+                    <div :class="['box1', 'box2']"></div>
+
+                    <div :class="{box1: isActive, box2: isChecked}"></div>
+                </div>
+            `,
+            data: {
+                title: '欢迎来到开课吧',
+                isShow: true,
+                users: [
+                    {id: 1, name: 'mt'},
+                    {id: 2, name: 'haizi'},
+                    {id: 3, name: 'ruirui'}
+                ],
+                myId: 'kkb',
+                s1: {
+                    color: 'red'
+                },
+                isActive: true,
+                isChecked: false
+            }
+        });
+
+        app.$mount('#app');
+
+        console.log(app);
+
+    </script>
+</body>
+</html>

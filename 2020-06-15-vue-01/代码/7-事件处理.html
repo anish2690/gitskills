@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /**
+         * 事件处理
+         *      - v-on 指令绑定事件
+         */
+        
+        let app = new Vue({
+            template: `
+                <div>
+                    <h1>{{v1}}</h1>
+                    <button v-on:click="v1++">按钮</button>
+                    <button v-on:click="fn1">按钮</button>
+                    <button @click="fn2">按钮</button>
+                    <button @click="fn3(1, $event)">按钮</button>
+                </div>
+            `,
+            data: {
+                v1: 1
+            },
+            // 存放组件中的可复用函数，methods中函数会默认绑定其上下文对象this到当前组件实例，不要使用箭头函数
+            // 如果其中的函数被绑定到了一个事件中，那么该函数到第一个参数就是 事件对象，如果带括号调用，则事件对象需要手动传入，且传入的事件对象名称必须是：$event
+            methods: {
+                fn1(e) {
+                    console.log(e);
+                    this.v1++;
+                },
+                fn2(e) {
+                    console.log(e);
+                    this.v1++;
+                },
+                fn3(a, b) {
+                    console.log(a, b);
+                    this.v1++;
+                }
+            }
+        });
+
+        app.$mount('#app');
+
+        console.log(app);
+
+    </script>
+</body>
+</html>

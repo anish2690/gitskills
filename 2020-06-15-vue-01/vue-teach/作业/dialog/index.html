@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/dialog.css" />
+</head>
+
+<body>
+
+    <div id="app">
+        <button @click="visible=!visible">按钮</button>
+
+        <kkb-dialog :title="title" :visible.sync="visible" @open="open" @close="close">
+            <span>这是一段信息</span>
+        </kkb-dialog>
+    </div>
+
+    <script src="../../代码/js/vue.js"></script>
+    <script src="./js/dialog.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                title: '新的标题',
+                visible: true
+            },
+            methods: {
+                open() {
+                    console.log('打开了');
+                },
+
+                close() {
+                    console.log('关闭了');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

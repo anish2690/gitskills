@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /**
+         * 组件除了模板以外，还有数据
+         */
+
+        
+        let app = new Vue({
+            template: `
+                <div>欢迎来到开课吧！</div>
+            `,
+            // 存储组件内部所需要使用到的数据
+            // 数据必须是一个对象
+            data: {
+                title: '欢迎来到开课吧'
+            }
+        });
+
+        app.$mount('#app');
+
+        console.log(app);
+
+
+        // function Vue(options) {
+        //     this.$data = options.data;
+        //     this._data = options.data;
+        //     for (key in options.data) {this[key] = options.data[key]}
+        // }
+
+        // 以 _ 开头的属性和方法为Vue到内部私有方法，不建议我们去访问
+
+        // 以 $ 开头的属性和方法才是Vue实例对外提供的方法
+
+        // 数据类的 Vue 会直接挂载到 Vue 的实例对象上，所以，一些特殊的数据直接可以通过 实例对象 进行方法
+
+    </script>
+</body>
+</html>

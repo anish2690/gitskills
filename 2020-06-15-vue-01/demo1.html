@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <kkb-component></kkb-component>
+    </div>
+    <script src="./代码/js/vue.js"></script>
+    <script>
+        Vue.component("kkb-component", {
+            template: `<div>
+                    MyComponent
+                    <button @click="setA" ref="getA">{{a}}</button>
+                    <button @click="setB" ref="getB">{{b}}</button>
+                    <button @click="setC" ref="getC">{{c}}</button>
+                </div>`,
+            data() {
+                return {
+                    name: "zhangsan",
+                    a: 1,
+                    b: 2,
+                    c: 3
+                }
+            },
+            methods: {
+                setA() {
+                    this.a++;
+                    console.log(this.a)
+                    /*
+                    // // 数据变化不会立即渲染视图 DOM渲染滞
+                    由于视图更新处于循环机制，进行拦截监听，在视图发生变化的时候，会先进行VNode比较差异打补丁，然后才会触发updata更新视图，但是由于在同一事件中，
+                    数据的变化，不等同于原生dom的数据变化，模板中的每一个原生dom，都是想虚拟dom生成的，因此不等同于原生DOM，
+                    所以数据驱动视图，视图影响数据，就是基于虚拟dom的特性，通过循环机制的持续监听拦截，在还没有update彻底的更新视图的时候获取原生dom的数据永远是上一次的VNode渲染出来的数据
+                    */
+                    console.log(this.$refs.getA.innerHTML)
+                },
+                setB() {
+                    this.b++;
+                    console.log(this.b);
+                    // // 数据变化不会立即渲染视图 DOM渲染滞后性
+                    console.log(this.$refs.getB.innerHTML);
+
+                },
+                setC() {
+                    this.c++;
+                    console.log(this.c)
+                    //this.$nextTick(),能够在数据发生之后立即调用，获取到最新的数据
+                    this.$nextTick(() => {
+                        console.log(this.$refs.getC.innerHTML);
+                    });
+                }
+            },
+            /*
+                updataed钩子函数，会在任何数据发生变化的时候就会触发。
+            */
+            updated() {
+                console.log("有数据发生变化了")
+            },
+        })
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                id: 123
+            }
+        })
+    </script>
+</body>
+
+</html>
