@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{message | isMessage | slice(3)}}
+        <div>价格：{{sum | toSum}} 元</div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                message: "hello kkb",
+                sum: 183
+            },
+            filters: {
+                isMessage(val) {
+                    return val.toUpperCase();
+                },
+                slice(val, n) {
+                    return val.slice(n);
+                },
+                toSum(val) {
+                   return val.toFixed(2)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

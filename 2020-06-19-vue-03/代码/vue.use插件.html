@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js"></script>
+    <script>
+        /*
+            插件：全局插件和局部插件
+            全局插件： Vue.use(),需要在调用new Vue()之前完成；
+            Vue.use(插件);
+            通常用来给vue拓展某些功能的一种方式，添加属性和方法，
+            如果插件是一个对象，必须提供install方法，如果是一个函数，被作为install方法调用
+        */
+
+        // 函数调用
+        // function http(_vue, opts) {
+        //     console.log(_vue);
+        //     console.log(opts);
+        // }
+        // Vue.use(http);
+
+        // 对象调用
+
+        function http(_Vue) {
+            _Vue.mixin({
+                beforeCreate() {
+                    if (this.$options.adaptor) {
+                        this.$http = this.$options.adaptor;
+                    }
+                    if (this.$options.parent && this.$options.parent.$http) {
+                        this.$http = this.$options, parent.$http;
+                    }
+                },
+            })
+        }
+        //通过函数调用 函数的第一个默认的参数是Vue类
+        Vue.use(http);
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            adaptor: axios,
+            async created() {
+                let res = await this.$http({
+                    methods: "post",
+                    url: "https://api.apiopen.top/musicRankings"
+                });
+                console.log(res);
+            },
+        })
+    </script>
+</body>
+
+</html>

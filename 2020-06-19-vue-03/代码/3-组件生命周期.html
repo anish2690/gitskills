@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <my-component></my-component>
+    </div>
+    
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('my-component', {
+            template: `<div>
+                MyComponent
+                <button @click="setA" ref="getA">{{a}}</button>
+                <button @click="setB" ref="getB">{{b}}</button>
+                <button @click="setC" ref="getC">{{c}}</button>
+            </div>`,
+
+            data() {
+                return {
+                    a: 1,
+                    b: 2,
+                    c: 100
+                }
+            },
+
+            updated() {
+                // console.log('updated')
+                // console.log(this.$refs.getA.innerHTML);
+                
+            },
+
+            methods: {
+                setA() {
+                    // 数据变化不会立即渲染视图
+                    this.a++;
+                    // console.log(this.a);
+                    // console.log(this.$refs.getA.innerHTML);
+                },
+                setB() {
+                    this.b++;
+                    // console.log(this.b);
+                    // console.log(this.$refs.getB.innerHTML);
+                },
+                setC() {
+                    this.c++;
+                    this.$nextTick(() => {
+                        console.log(this.$refs.getC.innerHTML);
+                    });
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                
+            }
+        });
+
+    </script>
+</body>
+</html>

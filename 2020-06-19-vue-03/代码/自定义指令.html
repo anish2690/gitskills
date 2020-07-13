@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+
+        .box2 {
+            width: 100px;
+            height: 100px;
+            left: 300px;
+            background-color: blue;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <button @click="canDrag = !canDrag">{{canDrag}}</button> -->
+        <!-- <div class="box1" v-drang.limit="canDrag"></div>
+        <div class="box2" v-drang.ord="canDrag"></div> -->
+        <!-- <is-loger></is-loger> -->
+        <input type="text" v-focus>
+        <input type="text" v-model="val" v-select="val">
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        //全局自定义指令 允许我们对UI元素进行个人自定义化，通过自定义指令做一些想做的事情
+        Vue.directive("drang", {
+            /*
+                1. el：指的是自定义指令绑定的元素节点；
+                2. binding：指的是一个选项对象 
+                    name -- 指令名 不包含v-前缀
+                    value -- 指令的绑定值
+                    oldValue -- 指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。
+                详情查看文档
+                3. vnode: 编译生成的虚拟节点。
+                4. oldVnode：上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。
+            */
+            bind(el, binding, vnode, oldVnode) {
+                el._Drag = binding.value;
+                let x = 0;
+                let y = 0;
+                let isDown = false;
+                el.addEventListener("mousedown", e => {
+                    if (!el._Drag) {
+                        return
+                    }
+                    isDown = true;
+                    x = e.clientX - el.offsetLeft;
+                    y = e.clientY - el.offsetTop;
+                    e.preventDefault();
+
+                })
+                document.addEventListener('mousemove', e => {
+                    if (isDown) {
+                        let l = e.clientX - x;
+                        let t = e.clientY - y;
+                        console.log(binding.modifiers)
+                        if (binding.modifiers.limit) {
+                            if (l < 0) {
+                                l = 0;
+                            }
+                        }
+
+                        el.style.left = l + 'px';
+                        el.style.top = t + 'px';
+                    }
+                });
+
+                document.addEventListener('mouseup', e => {
+                    isDown = false;
+                });
+            },
+            componentUpdated(el, binding) {
+                el._Drag = binding.value;
+            }
+        })
+        const isLoger = {
+            template: `
+                <div>
+                    <button @click="isShow = !isShow">{{isShow}}</button>
+                    <div class="box1" v-isdrang.ord="isShow"></div>
+                </div>
+            `,
+            data() {
+                return {
+                    isShow: false
+                }
+            },
+            mounted() {
+                console.log(this.isShow)
+            },
+            directives: {
+                isdrang: {
+                    bind(el, binding) {
+                        el._Drag = binding.value;
+                        let x = 0;
+                        let y = 0;
+                        let isDown = false;
+                        el.addEventListener("mousedown", e => {
+                            if (!el._Drag) {
+                                return
+                            }
+                            isDown = true;
+                            x = e.clientX - el.offsetLeft;
+                            y = e.clientY - el.offsetTop;
+                            e.preventDefault();
+                        })
+                        document.addEventListener('mousemove', e => {
+                            if (isDown) {
+                                let l = e.clientX - x;
+                                let t = e.clientY - y;
+                                if (binding.modifiers.ord) {
+                                    if (l < 0) {
+                                        l = 0;
+                                    }
+                                }
+                                el.style.left = l + 'px';
+                                el.style.top = t + 'px';
+                            }
+                        });
+
+                        document.addEventListener('mouseup', e => {
+                            isDown = false;
+                        });
+                    },
+                    componentUpdated(el, binding) {
+                        el._Drag = binding.value;
+                    }
+                },
+            }
+        }
+
+        Vue.directive("focus", {
+            inserted(el, binding) {
+                el.focus();
+            }
+        })
+
+        Vue.directive("select", {
+            bind(el, binding) {
+                el.addEventListener("click", e => {
+                    e.target.select()
+                })
+            }
+        })
+
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                canDrag: false,
+                val: 123123123
+            },
+            components: {
+                "is-loger": isLoger
+            }
+
+        })
+    </script>
+</body>
+
+</html>

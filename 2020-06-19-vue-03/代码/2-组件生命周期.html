@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <button @click="isShow = !isShow">{{isShow}}</button>
+        <my-component v-if="isShow"></my-component>
+    </div>
+    
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('my-component', {
+            template: `<div>MyComponent</div>`,
+
+            data() {
+                return {
+                    timer: 0
+                }
+            },
+
+            created() {
+                this.timer = setInterval(() => {
+                    console.log(Math.random());
+                }, 1000);
+            },
+
+            beforeDestroy() {
+                console.log('beforeDestroy')
+                clearInterval(this.timer);
+            },
+            destroyed() {
+                console.log('destroyed')
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                isShow : true
+            }
+        });
+
+    </script>
+</body>
+</html>

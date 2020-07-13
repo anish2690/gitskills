@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <my-component></my-component>
+        <my-component></my-component>
+        <my1></my1>
+        <!-- <my2></my2> -->
+    </div>
+    
+    <script src="./js/vue.js"></script>
+    <script>
+
+        /*
+            组件
+                - 根组件
+                - 可复用组件
+        */
+
+        // 符合命名规则（html标签）
+        // 不能与原生的html标签重名
+        // Vue.component('header', {
+        //     template: `<div>MyComponent</div>`
+        // });
+
+        // 通过 Vue.component 创建的是全局组件，在 Vue 的任何地方都可以访问
+        // 组件的options里面有一个选项：components，可以通过该选项来定义组件
+        Vue.component('my-component', {
+            template: `<div>MyComponent</div>`,
+            components: {
+                'my2': {
+                    template: `<div>My2</div>`
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            components: {
+                // 定义多个组件，每一个组件就是一个 key value 的映射
+                // 局部定义的组件只能在当前的组件中才能使用，其它地方（包括它的子级也都是不能使用的）
+                'my1': {
+                    template: `<div>My1</div>`
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

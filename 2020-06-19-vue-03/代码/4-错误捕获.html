@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <err-container>
+            <kkb-component></kkb-component>
+        </err-container>
+    </div>
+    
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component('err-container', {
+            data() {
+                return {
+                    err: false
+                }
+            },
+            template: `<div><slot v-if="!err"></slot><h1 v-else>请联系管理员！</h1></div>`,
+            errorCaptured() {
+                console.log('errorCaptured');
+                this.err = true;
+            }
+        });
+
+        Vue.component('kkb-component', {
+            data() {
+                return {
+                    a: 1
+                }
+            },
+            template: `<div>组件{{a.b}}</div>`,
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                
+            }
+        });
+
+    </script>
+</body>
+</html>

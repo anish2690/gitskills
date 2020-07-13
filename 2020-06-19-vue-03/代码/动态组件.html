@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .current {
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="gotoPreViews('InBox')" :class="{'current': currenComponent=='InBox'}">收邮件</button>
+        <button @click="gotoPreViews('PostMail')" :class="{'current': currenComponent=='PostMail'}">发邮件</button>
+        <button @click="gotoPreViews('Recdyn')" :class="{'current': currenComponent=='Recdyn'}">垃圾箱</button>
+        
+        <!-- 
+            对于需要频繁切换多个状态的组件，需要使用动态组件进行处理，可以有效避免各种弊端
+         -->
+        <!-- <in-box v-if="currenComponent == 'InBox'"></in-box>
+        <post-mail v-if="currenComponent == 'PostMail'"></post-mail>
+        <recdyn v-if="currenComponent == 'Recdyn'"></recdyn> -->
+
+        <!-- 
+            动态组件 component是vue内置于模板中的一个用于创建动态组件的自定义标签，通过属性is接受一个动态的值
+            该值可以是已注册的组件名字或者是一个组件的选项对象
+            如果想保存当前组件的状态，可以使用<keep-alive>，该组件是异步组件
+            此组件会将数据相应的状态冻结保存起来，避免组件被销毁，从而达到状态回显
+         -->
+         <keep-alive>
+            <component :is="currenComponent"></component>
+         </keep-alive>
+        
+
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        /*
+            传统的静态组件难以应对复杂的业务，需要处理的逻辑复杂，不易于维护
+            如果用v-if 有销毁的过程，性能开销大，不易于频繁切换 也无法保存组件的状态
+            如果用v-show，无论后续是否切换组件，都会统一进行渲染
+            在html结构上也会存在
+        */
+        const InBox = {
+            data() {
+                return {
+                    items: [
+                        "11111",
+                        "22222",
+                        "adasda",
+                        "4532"
+                    ]
+                }
+            },
+            template: `
+                <div>
+                    <ul>
+                        <li v-for="(item,index) in items">
+                            <input type="checkbox" />
+                            {{item}}
+                        </li>
+                    </ul>
+                </div>
+            
+            `,
+            created() {
+                console.log("InBox: created");
+            },
+            destroyed() {
+                console.log("InBox: destroyed");
+            },
+        }
+
+        const PostMail = {
+            data() {
+                return {
+                    name: "PostMail"
+                }
+            },
+            template: `
+                <div>{{name}}</div>
+            `,
+            created() {
+                console.log("PostMail: created");
+            },
+            destroyed() {
+                console.log("PostMail: destroyed");
+            },
+        }
+
+        const Recdyn = {
+            data() {
+                return {
+                    name: "Recdyn"
+                }
+            },
+            template: `
+                <div>
+                    {{name}}
+                </div>
+            `,
+            created() {
+                console.log("Recdyn: createde");
+            },
+            destroyed() {
+                console.log("Recdyn: destroyed")
+            },
+        }
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                id: 123,
+                currenComponent: "InBox"
+            },
+            components: {
+                InBox,
+                PostMail,
+                Recdyn
+            },
+            mounted() {
+            },
+            methods: {
+                gotoPreViews(name) {
+                    this.currenComponent = name;
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

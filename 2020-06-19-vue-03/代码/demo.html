@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <kkb-component>
+            <template v-slot:header="user">
+                {{user.id}}
+            </template>
+        </kkb-component>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        Vue.component("kkb-component", {
+            template: `<div>
+                    MyComponent
+                    <slot :user="name" name="header" :id="a"></slot>
+                    <button @click="setA" ref="getA">{{a}}</button>
+                    <button @click="setB" ref="getB">{{b}}</button>
+                    <button @click="setC" ref="getC">{{c}}</button>
+                </div>`,
+            data() {
+                return {
+                    name: "zhangsan",
+                    user: "你好",
+                    a: 1,
+                    b: 2,
+                    c: 100
+                }
+            },
+            methods: {
+                setA() {
+                    this.a++;
+                    console.log(this.a)
+                },
+                setB() {
+                    console.log(this.b++);
+                    console.log(this.b);
+                },
+                setC() {
+                    console.log(this.c);
+                    console.log(this.c);
+                }
+            },
+        })
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                id: 123,
+                name: "张三"
+            }
+        })
+    </script>
+</body>
+
+</html>
