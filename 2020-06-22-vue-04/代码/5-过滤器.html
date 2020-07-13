@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+
+        <h1>{{upperCase(currentComponent)}}</h1>
+
+        <h1>{{currentComponent | upperCase}}</h1>
+
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        function upperCase(str) {
+            return str.toUpperCase(str);
+        }
+
+        Vue.filter('upperCase', upperCase);
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                currentComponent: 'InBox'
+            },
+            methods: {
+                upperCase
+            }
+        });
+
+        // c( b( a( 'kaikeba' ), 1 ) );
+
+        // 管道符，管道符左侧的结果会作为右侧方法的第一个参数
+        // 'kaikeba' | a | b(1) | c
+
+    </script>
+</body>
+</html>

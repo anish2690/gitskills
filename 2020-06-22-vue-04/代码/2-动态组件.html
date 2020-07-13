@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .current {
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+
+        <button @click="goto('InBox')" :class="{'current': currentComponent==='InBox'}">收邮件</button>
+        <button @click="goto('PostMail')" :class="{'current': currentComponent==='PostMail'}">发邮件</button>
+        <button @click="goto('RecycleBin')" :class="{'current': currentComponent==='RecycleBin'}">垃圾箱</button>
+
+        <hr>
+
+        <!--同一时间内，只显示其中一个组件-->
+        <!-- 
+            1、比较复杂（特别逻辑多的时候）
+            2、如果用v-if
+                1、有销毁过程，如果频繁切换，开销大
+                2、无法保存组件状态
+            3、如果用v-show：
+                1、无论后续是否切换组件，组件都会统一进行渲染
+                2、组件结构是在html中可以查看
+         -->
+        <!-- <in-box v-if="currentComponent === 'InBox'"></in-box>
+        <post-mail v-if="currentComponent === 'PostMail'"></post-mail>
+        <recycle-bin v-show="currentComponent === 'RecycleBin'"></recycle-bin>     -->
+
+        
+        <keep-alive>
+            <!-- is 接收的是要显示的组件名称 -->
+            <component :is="currentComponent"></component>
+        </keep-alive>
+
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        const InBox = {
+            data() {
+                return {
+                    items: [
+                        '111111',
+                        '22222222222',
+                        'aaaaaaaa',
+                        '3333333'
+                    ]
+                }
+            },
+            template: `
+                <div>
+                    <ul>
+                        <li v-for="item of items">
+                            <input type="checkbox" />
+                            {{item}}
+                        </li>
+                    </ul>
+                </div>
+            `,
+            created() {
+                console.log('InBox:created');
+            },
+            destroyed() {
+                console.log('InBox:destroyed');
+            },
+            activated() {
+                console.log('InBox:activated')
+            },
+            deactivated() {
+                console.log('InBox:deactivated')
+            }
+        }
+
+
+        const PostMail = {
+            template: `
+                <div>PostMail</div>
+            `,
+            created() {
+                console.log('PostMail:created');
+            },
+            destroyed() {
+                console.log('PostMail:destroyed');
+            }
+        }
+
+        const RecycleBin = {
+            template: `
+                <div>RecycleBin</div>
+            `,
+            created() {
+                console.log('RecycleBin:created');
+            },
+            destroyed() {
+                console.log('RecycleBin:destroyed');
+            }
+        }
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                currentComponent: 'InBox'
+            },
+            components: {
+                InBox,
+                PostMail,
+                RecycleBin
+            },
+            methods: {
+                goto(name) {
+                    this.currentComponent = name;
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

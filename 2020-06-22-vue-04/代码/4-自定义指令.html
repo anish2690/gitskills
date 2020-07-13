@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+        .box2 {
+            width: 100px;
+            height: 100px;
+            left: 300px;
+            background-color: green;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+
+            <button @click="canDrag = !canDrag">{{canDrag}}</button>
+
+            <div class="box1" v-drag.limit="canDrag"></div>
+
+            <div class="box2" v-drag="canDrag"></div>
+
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        Vue.directive('drag', {
+            bind(el, binding) {
+                
+                // console.log(el);
+                console.log(binding);
+                // let {value} = binding;
+
+                el._canDrag = binding.value;
+
+                let x = 0;
+                let y = 0;
+                let isDown = false;
+
+                el.addEventListener('mousedown', e => {
+
+                    if (!el._canDrag) return;
+
+                    isDown = true;
+                    x = e.clientX - el.offsetLeft;
+                    y = e.clientY - el.offsetTop;
+
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', e => {
+                    if (isDown) {
+                        let l = e.clientX - x;
+                        let t = e.clientY - y;
+
+                        if (binding.modifiers.limit) {
+                            if (l < 0) {
+                                l = 0;
+                            }
+                        }
+
+                        el.style.left = l + 'px';
+                        el.style.top = t + 'px';
+                    }
+                });
+
+                document.addEventListener('mouseup', e => {
+                    isDown = false;
+                });
+
+            },
+
+            componentUpdated(el, binding) {
+                el._canDrag = binding.value;
+            }
+        });
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                canDrag: false
+            }
+        });
+
+    </script>
+</body>
+</html>

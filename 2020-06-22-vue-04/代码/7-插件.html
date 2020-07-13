@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+
+        function axios() {
+            console.log('axios');
+        }
+
+        Vue.prototype.http = axios;
+
+        // import axios from 'axios';
+        Vue.component('my-component', {
+            template:`<div>my-component</div>`,
+            created() {
+                this.axios();
+            }
+        });
+
+        // import axios from 'axios';
+        let app = new Vue({
+            el: '#app',
+            created() {
+                this.axios();
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .js_animation_box {
+            width: 0px;
+            height: 0px;
+            background: red;
+        }
+
+        .slide-fade-enter {
+            width: 0;
+            height: 0;
+        }
+        .slide-fade-enter-to {
+            width: 100px;
+            height: 100px;
+        }
+        .slide-fade-enter-active {
+            transition: all 5s ease;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <button @click="isShow = !isShow">vue动画</button>
+
+        <!-- <transition 
+            name="slide-fade"
+            @before-enter="beforeEnter"
+            @enter="enter"
+        >
+            <div v-if="isShow" class="js_animation_box"></div>
+        </transition> -->
+
+        <transition 
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter"
+        >
+            <div v-if="isShow" class="js_animation_box"></div>
+        </transition>
+
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script>
+
+        let app = new Vue({
+            el: '#app',
+            data: {
+                isShow: false
+            },
+            methods: {
+                beforeEnter(el) {
+                    console.log('beforeEnter', el);
+                },
+                enter(el, done) {
+                    console.log('enter', el);
+
+                    $(el).animate({
+                        width:200,
+                        height: 200
+                    }, 3000, () => {
+                        console.log('over')
+                        done();
+                    })
+
+                },
+                afterEnter() {
+                    console.log('afterEnter');
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

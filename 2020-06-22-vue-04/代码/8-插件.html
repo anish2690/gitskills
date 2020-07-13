@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <my-component></my-component>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/kkb.js"></script>
+    <script>
+
+        // 把扩展作为参数传给 use
+        //  1、函数
+        //  2、包含一个 install 方法的对象
+        // Vue.use( kkb );
+
+        // Vue.use( kkb, {a: 1} );
+
+        Vue.use( kkb );
+
+        Vue.component('my-component', {
+            template:`<div>my-component</div>`,
+            created() {
+                // this.axios();
+                // console.log('my-component - created', this.kkb);
+
+                this.http();
+            }
+        });
+
+
+        function axios() {
+            console.log('axios发请求');
+        }
+
+        function fetch() {
+            console.log('fetch发请求');
+        }
+
+        let app = new Vue({
+            el: '#app',
+            adaptor: axios,
+            created() {
+                // this.axios();
+                // console.log('app - created', this.kkb);
+
+                this.http();
+            }
+        });
+
+    </script>
+</body>
+</html>
